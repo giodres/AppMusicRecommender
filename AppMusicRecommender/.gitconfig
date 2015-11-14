@@ -1,0 +1,8 @@
+[user]
+	name = Andres Garcia Osorio
+	email = andres.prog.dev@gmail.com
+[color]
+	status = auto
+	branch = auto
+	diff = auto
+	interactive = auto
