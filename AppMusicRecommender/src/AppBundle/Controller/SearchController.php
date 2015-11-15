@@ -36,7 +36,7 @@ class SearchController extends Controller
         $listSongs = $songs->searchSongs($value)->get();
 
 
-        return $this->render('search/index.html.twig',
+        return $this->render('searchMain/index.html.twig',
             array('base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
                 'form_value'=>$listSongs,
 
