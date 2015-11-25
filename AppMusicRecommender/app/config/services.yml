@@ -2,8 +2,33 @@
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
 #    parameter_name: value
+    imp_service_library : ImpServiceLibrary\UserServiceLibrary
+    imp_builder_repository : Infrastructure\UserBuilderRepository
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+  entity.manager:
+    class:     Infrastructure\UserBuilderRepository
+    arguments: [ @doctrine.orm.entity_manager ]
+
+  imp.service.library:
+      class:     ImpServiceLibrary\UserServiceLibrary
+      arguments : [  @service_container , @impl.builder.repository ]
+
+  impl.builder.repository:
+        class:     Infrastructure\UserBuilderRepository
+        arguments : [  @doctrine.orm.entity_manager  ]
+
+  imp.service.registration:
+        class:     AppBundle\Controller\RegistrationController
+        arguments: [@imp.service.library]
+
+
+
+  search.controller:
+          class:     AppBundle\Controller\SearhController
+          arguments: [@imp.service.library]
+
+  music.imp.service.library:
+        class:     ImpServiceLibrary\MusicServiceLibrary
+        arguments : [  @service_container , @impl.builder.repository ]

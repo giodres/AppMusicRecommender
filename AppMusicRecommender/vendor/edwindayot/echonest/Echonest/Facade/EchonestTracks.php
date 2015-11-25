@@ -44,6 +44,7 @@ class EchonestTracks extends Echonest {
         return $this->queryBuilder
             ->setCommand('profile')
             ->setOption('id', $id);
+
     }
 
     /**
@@ -72,4 +73,5 @@ class EchonestTracks extends Echonest {
             ->setCommand('upload')
             ->setOption('url', $url);
     }
+
 }

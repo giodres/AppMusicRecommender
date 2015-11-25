@@ -1,9 +1,9 @@
 parameters:
-    database_host: 127.0.0.1
-    database_port: null
-    database_name: symfony
-    database_user: root
-    database_password: null
+    database_host: 37.187.245.156
+    database_port: 3306
+    database_name: AppMusicRecommender
+    database_user: giodres
+    database_password: giodres
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null

@@ -39,7 +39,8 @@ class EchonestSongs extends Echonest {
     {
         return $this->queryBuilder
             ->setCommand('search')
-            ->setOption('artist', $name);
+            ->setOption('artist', $name)
+            ;
     }
 
     /**

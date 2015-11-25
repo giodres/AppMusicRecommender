@@ -281,7 +281,7 @@ class QueryBuilder
      * @param $command
      * @param array $options
      */
-    private function query($api, $command, $options = [])
+    private function query($api, $command, $options = [],$track = false)
     {
         $client = new Client($this->getRemote());
 
@@ -291,6 +291,7 @@ class QueryBuilder
 
         if ($this->method == 'get') {
             $http_query = preg_replace('/%5B[0-9]+%5D/simU', '', http_build_query($options));
+            if ($track == true) $http_query .= '&bucket=id:7digital-US&bucket=tracks';
 
             $request = $client->get($api . '/' . $command . '?' . $http_query);
         } else if ($this->method == 'post') {
@@ -311,13 +312,15 @@ class QueryBuilder
      *
      * @return string
      */
-    public function get($key = null)
+    public function get($key = null, $track = false)
     {
         $response = json_decode($this->query(
             $this->getApi(),
             $this->getCommand(),
-            $this->getOptions()
+            $this->getOptions(),
+            $track
         )->getBody(), true)['response'];
+
 
         unset($response['status']);
 

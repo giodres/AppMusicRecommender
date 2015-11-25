@@ -17,7 +17,8 @@
     </head>
     <body>
         {% block top %}{% endblock %}
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <div class="col-lg-offset-3">{% block body %}{% endblock %}</div>
+        {% block bodyHome %}{% endblock %}
+        {% block javascript %}{% endblock %}
     </body>
 </html>

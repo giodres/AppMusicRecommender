@@ -2,45 +2,63 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Echonest\Facade\Echonest;
-use Echonest\Facade\EchonestSongs;
+use Library\MusicRepository;
+use AppBundle\Mapper\Song;
+use AppBundle\Mapper\Track;
 
 /**
- * @Route("/listOfSongs")
+ * @Route("/Search")
  */
 class SearchController extends Controller
 {
     /**
-     * @Route("/Search", name="listOfSongs")
+     * @InjectParams({
+     *    "_musicServiceLibrary" = @Inject("search.controller")
+     * })
      */
-    public function indexAction(Request $request)
-    {
+    protected $_musicServiceLibrary;
 
+    /**
+     * @Route("", name="listOfSongs")
+     */
+    public function indexAction()
+    {
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));
     }
 
     /**
-     * @Route("/Search/{value}", name="listOfSongsWithValue")
+     * @Route("/{value}", name="listOfSongsWithValue")
      * @Method({"GET"})
      */
     public function showAction($value)
     {
-        $echonest = Echonest::init('MDORNCSRVVWZJVJFN');
-        $songs = new EchonestSongs($echonest);
-        $listSongs = $songs->searchSongs($value)->get();
+        $apiMusic = new MusicRepository();
+        $songTrack = array();
+        //var_dump($apiMusic->searchSongs($value));
+        $songs = $apiMusic->searchSongs($value);
+        //var_dump($songs);
+        foreach($songs['songs'] as $rot) {
+            $rtrack = array();
+            foreach($rot['tracks'] as $temp) {
+                $rtrack = $temp;
+                break;
+            }
 
+
+            if (count($rtrack) == 0) continue;
+            $track = new Track($rtrack["release_image"],$rtrack['id'],$rtrack['preview_url']);
+            $song = new Song($rot['artist_name'],$rot['title'],$track);
+            $songTrack[] = $song;
+        }
 
         return $this->render('searchMain/index.html.twig',
             array('base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-                'form_value'=>$listSongs,
-
-                )
+                "result" => $songTrack,
+            )
         );
     }
 }
