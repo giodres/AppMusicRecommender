@@ -6,6 +6,8 @@ use AppBundle\Mapper\Song;
 use AppBundle\Mapper\Track;
 use Library\MusicRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * @Route("/Search")
