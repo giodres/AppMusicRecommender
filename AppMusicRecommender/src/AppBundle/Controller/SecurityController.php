@@ -9,8 +9,6 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 class SecurityController extends Controller
@@ -26,7 +24,7 @@ class SecurityController extends Controller
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render(
-            'security/login.html.twig',
+            'sec/login.html.twig',
             array(
                 // last username entered by the user
                 'last_username' => $lastUsername,

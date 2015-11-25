@@ -2,11 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Library\MusicRepository;
 use AppBundle\Mapper\Song;
 use AppBundle\Mapper\Track;
+use Library\MusicRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * @Route("/Search")

@@ -8,10 +8,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
-Use AppBundle\Form\UserType;
 
 
 class RegistrationController extends Controller
@@ -39,7 +39,7 @@ class RegistrationController extends Controller
             $isCreate = $this->createNewUser($form,$user);
             if($isCreate) return $this->redirectToRoute('login_route');
             return $this->render(
-                'security/register.html.twig',
+                'sec/register.html.twig',
                 array('form' => $form->createView())
             );
         } catch(Exception $e) {
