@@ -3,20 +3,22 @@
 {% block body %}
     <div class="container">
         <div class="col-xs-12 col-md-7">
+            <div id="reproductor"></div>
             <div class="table-responsive">
                 <table class="table">
             {% for key,row in result %}
                 <tbody style="border: 1px solid;">
                     <tr>
-                        <td>{{ row.getTrack().getPreviewUrl() }}
+                        <td>
                             <img src="{{row.getTrack().getReleaseImage() }}" width="75px" height="75px" class="img-responsive" alt="Responsive image" style="    border-radius: 80px">
                         </td>
                         <td>&nbsp;</td>
                         <td style="vertical-align: inherit;">
-                            <div style="text-align: left"><h4>{{ row.nameArtist }} - {{ row.nameSong }})</h4></div>
+                            <div style="text-align: left"><h4>{{ row.nameArtist }} - {{ row.nameSong }}</h4></div>
                         </td>
                         <td style="vertical-align: inherit;text-align: center">
-                            <button type="button" class="btn btn-default" aria-label="Left Align">
+                            <button type="button" class="btn btn-default" aria-label="Left Align"
+                                    onclick="loadSong('{{ row.getTrack().getPreviewUrl() }}');">
                                 <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
                             </button>
 
@@ -29,6 +31,18 @@
             </div>
         </div>
     </div>
+
+
+
+    <script>
+
+        function loadSong(preview_url) {
+            $("#reproductor").html('<audio controls autoplay style="width: 100%"><source src="' + preview_url + '" type="audio/ogg" /><source src="' + preview_url + '" type="audio/mpeg" /></audio>');
+        }
+    </script>
+
+
+
 {% endblock %}
 
 {% block stylesheets %}
@@ -36,11 +50,5 @@
 {% endblock %}
 
 {% block javascript %}
-<script>
 
-        audioObject = new Audio("http://previews.7digital.com/clip/11368884?oauth_consumer_key=7dr59jr3yt2t&Country=gb");
-        audioObject.play();
-
-
-</script>
 {% endblock %}

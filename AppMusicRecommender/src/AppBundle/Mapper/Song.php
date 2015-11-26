@@ -34,9 +34,5 @@ class Song
         return $this->track;
     }
 
-    public function getReleaseImage() {
-        return $this->track->getReleaseImage();
-    }
-
 
 }
