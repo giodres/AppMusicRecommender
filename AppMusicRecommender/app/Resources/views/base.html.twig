@@ -14,11 +14,75 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>
+
+            function loadSong(id_song, id_track) {
+                $("#load").show();
+                $('html, body').animate({
+                    scrollTop: 0,
+                }, 1000);
+
+                $.ajax({
+                    url: "{{ path('publishActivity') }}",
+                    type: "GET",
+                    data: {
+                        idSong: id_song,
+                        idTrack: id_track
+                    },
+                    success: function (response) {
+                        $("#imgSong").prop("src", response.image);
+                        $("#object").html('<audio controls autoplay style="width: 100%"><source src="' + response.preview + '" type="audio/ogg" /><source src="' + response.preview + '" type="audio/mpeg" /></audio>');
+                        $("#player").show();
+                        $("#load").fadeOut();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown);
+                        $("#load").fadeOut();
+                    }
+
+                });
+
+
+                /*   $.ajax({
+                 url: "
+                {{ path('publishActivity') }}",
+                 type: "post",
+                 data: {
+                 idTrack: id_track,
+                 idGenere: id_genere,
+                 idAlbum : id_album,
+                 idSinger:id_singer
+                 }  ,
+                 success: function (response) {
+                 console.log("Response : " + response )
+                 },
+                 error: function(jqXHR, textStatus, errorThrown) {
+                 console.log(textStatus, errorThrown);
+                 }
+
+                 });*/
+
+            }
+
+        </script>
+
     </head>
     <body>
         {% block top %}{% endblock %}
-        <div class="col-lg-offset-3">{% block body %}{% endblock %}</div>
-        {% block bodyHome %}{% endblock %}
-        {% block javascript %}{% endblock %}
+        <div class="panel panel-default">
+            <div class="panel-body" id="load"
+                 style="display:none;position: absolute; width: 100%;height: 500%; z-index:111111;text-align: center;background-color: #FFFFFF;">
+                <img src="http://linux.m2osw.com/sites/linux.m2osw.com/files/images/waiting-wheel-300x300.gif">
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-3">Recomendador</div>
+        <div class="col-xs-12 col-md-7">{% block body %}{% endblock %}</div>
+        <div class="col-xs-12 col-md-7">{% block bodyHome %}{% endblock %}</div>
+        {% block javascript %}
+
+
+
+        {% endblock %}
     </body>
 </html>

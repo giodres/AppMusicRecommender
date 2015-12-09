@@ -10,6 +10,13 @@ namespace Library;
 
 interface IMusicRepository
 {
-    function searchSongs($value);
+
+    public function searchSongs($value);
+
+    public function searchTrack($id);
+
+    public function getSongsByArtist($value);
+
+    public function searchTrackWithArtist();
 
 }

@@ -11,3 +11,4 @@ parameters:
     secret: s0p0rt3
     database_driver: pdo_mysql
     database_path: null
+

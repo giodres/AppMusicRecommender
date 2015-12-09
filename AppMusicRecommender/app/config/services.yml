@@ -3,14 +3,20 @@
 parameters:
 #    parameter_name: value
     imp_service_library : ImpServiceLibrary\UserServiceLibrary
+    music_imp_service_library : ImpServiceLibrary\MusicServiceLibrary
     imp_builder_repository : Infrastructure\UserBuilderRepository
+    music_imp_builder_repository : Infrastructure\MusicBuilderRepository
+    music_library_repository : Library\MusicRepository
+
 
 services:
 
+  # - Entity
   entity.manager:
     class:     Infrastructure\UserBuilderRepository
     arguments: [ @doctrine.orm.entity_manager ]
 
+  # - Servicios enfocados al usuario
   imp.service.library:
       class:     ImpServiceLibrary\UserServiceLibrary
       arguments : [  @service_container , @impl.builder.repository ]
@@ -19,16 +25,44 @@ services:
         class:     Infrastructure\UserBuilderRepository
         arguments : [  @doctrine.orm.entity_manager  ]
 
-  imp.service.registration:
-        class:     AppBundle\Controller\RegistrationController
-        arguments: [@imp.service.library]
 
+  # - Librerias
+  music.Library.repository:
+        class:     Library\MusicRepository
 
+  recommender.Library.repository :
+        class:     Library\RecommenderRepository
 
-  search.controller:
-          class:     AppBundle\Controller\SearhController
-          arguments: [@imp.service.library]
+  # - Servicios enfocados a la musica
+  music.impl.builder.repository:
+          class:     Infrastructure\MusicBuilderRepository
+          arguments : [  @doctrine.orm.entity_manager ]
 
   music.imp.service.library:
         class:     ImpServiceLibrary\MusicServiceLibrary
-        arguments : [  @service_container , @impl.builder.repository ]
+        arguments : [ @music.Library.repository ]
+
+
+  # Recomendador
+  recommender.imp.service.library:
+          class:     ImpServiceLibrary\RecommenderServiceLibrary
+          arguments : [ @music.Library.repository, @service_container, @recommender.impl.builder.repository ]
+
+  recommender.impl.builder.repository:
+          class:     Infrastructure\RecommenderBuilderRepository
+          arguments : [  @doctrine.orm.entity_manager ]
+
+  # - controladores
+  imp.service.registration:
+          class:     AppBundle\Controller\RegistrationController
+          arguments: [@imp.service.library]
+
+  search.controller:
+          class:     AppBundle\Controller\SearchController
+          arguments: [@music.imp.service.library]
+
+  recommender.controller:
+            class:     AppBundle\Controller\SearchController
+            arguments: [@music.imp.service.library,@recommender.imp.service.library ]
+
+

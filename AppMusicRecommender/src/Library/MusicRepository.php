@@ -8,6 +8,8 @@ use Echonest\Facade\Echonest;
 use Echonest\Facade\EchonestSongs;
 use Echonest\Facade\EchonestTracks;
 use Symfony\Component\DependencyInjection\Container;
+use AppBundle\Mapper\Song;
+use AppBundle\Mapper\Track;
 
 Class MusicRepository implements IMusicRepository
 {
@@ -28,14 +30,58 @@ Class MusicRepository implements IMusicRepository
     public function searchSongs($value) {
 
         $listSongs = $this->SongsLibrary->getArtistSongs($value)->get(null,true);
-
         return  $listSongs;
+    }
+
+    public function searchSongStyle($value)
+    {
+
+        $listSongs = $this->SongsLibrary->searchSongStyle($value)->get(null, true);
+
+        return $listSongs;
     }
 
     public function searchTrack($id) {
 
         $track = $this->TrackLibrary->getTrackProfile($id)->get();
         return  $track;
+    }
+
+    public function getSongById($id)
+    {
+
+        $song = $this->SongsLibrary->getSongProfile($id)->get(null, true);
+        return new Song($song['songs'][0]);
+    }
+
+
+    public function getSongsByArtist($value)
+    {
+        $songTrack = array();
+        $songs = $this->searchSongs($value);
+        foreach ($songs['songs'] as $rot) {
+            if (count($rot['tracks']) == 0) continue;
+            $track = Track::constructTrack($rot['tracks'][0]);
+            $rotSong = new Song($rot);
+            $rotSong->setTrack($track);
+            $songTrack[] = $rotSong;
+        }
+        return $songTrack;
+    }
+
+    public function getSongsByNameStyle($value)
+    {
+        $songTrack = array();
+        $songs = $this->searchSongStyle($value);
+        foreach ($songs['songs'] as $rot) {
+            if (count($rot['tracks']) == 0) continue;
+            $track = Track::constructTrack($rot['tracks'][0]);
+            $rotSong = new Song($rot);
+            $rotSong->setTrack($track);
+            $songTrack[] = $rotSong;
+        }
+        return $songTrack;
+
     }
 
     public function searchTrackWithArtist() {

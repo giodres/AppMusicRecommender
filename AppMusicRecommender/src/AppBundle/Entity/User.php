@@ -10,9 +10,10 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Table(name="app_users")
+ * @ORM\Table(name="User")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
  */
 class User implements UserInterface, \Serializable
@@ -23,6 +24,11 @@ class User implements UserInterface, \Serializable
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Activity", mappedBy="User")
+     */
+    protected $activities;
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
@@ -47,9 +53,14 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
+        $this->activities = new ArrayCollection();
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
 
     public function getUsername()
     {
@@ -87,6 +98,16 @@ class User implements UserInterface, \Serializable
     public function getRoles()
     {
         return array('ROLE_USER');
+    }
+
+    public function getActivities()
+    {
+        return $this->activities;
+    }
+
+    public function setActivities($activities)
+    {
+        $this->activities = $activities;
     }
 
     public function getEmail() {

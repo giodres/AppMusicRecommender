@@ -15,13 +15,29 @@ class Track
     private $id;
     private $foreign_id;
     private $previewUrl;
+    private $idAlbum;
 
-    public function __construct($params)
+
+    public function __construct()
     {
-        $this->id = $params['id'];
+
+    }
+
+
+    public static function constructTrack($params)
+    {
+        $instance = new self();
+        $instance->id = $params['id'];
         $split = explode(":", $params['foreign_id']);
-        $this->foreign_id = $split[2];
-        $this->getData();
+        $instance->foreign_id = $split[2];
+        return $instance;
+    }
+
+    public static function createTrack($id)
+    {
+        $instance = new self();
+        $instance->foreign_id = $id;
+        return $instance;
     }
 
     public function getReleaseImage(){
@@ -36,11 +52,23 @@ class Track
         return $this->previewUrl;
     }
 
+    public function getForeignId()
+    {
+        return $this->foreign_id;
+    }
+
+    public function getIdAlbum()
+    {
+        return $this->idAlbum;
+    }
+
     public function getData()
     {
         $json = file_get_contents('https://api.spotify.com/v1/tracks/' . $this->foreign_id);
         $obj = json_decode($json);
         $this->releaseImage = $obj->album->images[0]->url;
         $this->previewUrl = $obj->preview_url;
+        $split = explode(":", $obj->uri);
+        $this->idAlbum = $split[2];
     }
 }

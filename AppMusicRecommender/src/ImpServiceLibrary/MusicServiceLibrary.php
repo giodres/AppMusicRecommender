@@ -9,25 +9,38 @@
 namespace ImpServiceLibrary;
 
 use Infrastructure\MusicBuilderRepository;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Library\MusicRepository;
 
 class MusicServiceLibrary
 {
-    protected $container;
     protected $_musicBuilderRepository;
 
     /**
      * @InjectParams({
-     *    "container" = @Inject("music.imp.service.library:")
-     *    "_userBuilderRepository" = @Inject("music.impl.builder.repository")
+     *    "_musicLibraryRepository" = @Inject("music.library.repository")
      * })
      */
-    function __construct(ContainerInterface $container, MusicBuilderRepository $musicBuilderRepository)
+    function __construct(MusicRepository $musicLibraryRepository)
     {
-        $this->container = $container;
-        $this->_musicBuilderRepository = $musicBuilderRepository;
-
+        $this->_musicLibraryRepository = $musicLibraryRepository;
     }
+
+    public function getSongsByArtist($value)
+    {
+        return $this->_musicLibraryRepository->getSongsByArtist($value);
+    }
+
+    public function getSongsById($value)
+    {
+        return $this->_musicLibraryRepository->getSongById($value);
+    }
+
+    public function getSongsByNameStyle($value)
+    {
+        return $this->_musicLibraryRepository->getSongsByNameStyle($value);
+    }
+
+
 
 
 }

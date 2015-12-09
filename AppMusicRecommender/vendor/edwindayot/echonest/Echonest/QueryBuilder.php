@@ -291,7 +291,7 @@ class QueryBuilder
 
         if ($this->method == 'get') {
             $http_query = preg_replace('/%5B[0-9]+%5D/simU', '', http_build_query($options));
-            if ($track == true) $http_query .= '&bucket=id:spotify&bucket=tracks';
+            if ($track == true) $http_query .= '&bucket=id:spotify&bucket=audio_summary';
 
             $request = $client->get($api . '/' . $command . '?' . $http_query);
         } else if ($this->method == 'post') {
@@ -301,7 +301,6 @@ class QueryBuilder
         }
 
         $response = $request->send();
-
         $this->setBody($response->getBody(true));
 
         return $this;

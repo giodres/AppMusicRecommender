@@ -34,7 +34,7 @@ class RegistrationController extends Controller
     public function registerAction(Request $request)
     {
         $this->_userServiceLibrary = $this->container->get("imp.service.library");
-        //$this->_userServiceLibrary = new UserServiceLibrary();
+
         try {
             $user = $this->_userServiceLibrary->getInstanceUser();
             $form = $this->generateForm($request,$user);
