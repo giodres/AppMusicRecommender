@@ -16,6 +16,7 @@ class Track
     private $foreign_id;
     private $previewUrl;
     private $idAlbum;
+    private $nameAlbum;
 
 
     public function __construct()
@@ -62,12 +63,18 @@ class Track
         return $this->idAlbum;
     }
 
+    public function getNameAlbum()
+    {
+        return $this->nameAlbum;
+    }
+
     public function getData()
     {
         $json = file_get_contents('https://api.spotify.com/v1/tracks/' . $this->foreign_id);
         $obj = json_decode($json);
         $this->releaseImage = $obj->album->images[0]->url;
         $this->previewUrl = $obj->preview_url;
+        $this->nameAlbum = $obj->album->name;
         $split = explode(":", $obj->uri);
         $this->idAlbum = $split[2];
     }

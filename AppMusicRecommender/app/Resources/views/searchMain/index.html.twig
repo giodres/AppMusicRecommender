@@ -1,16 +1,24 @@
 {% extends 'top.html.twig' %}
 
 {% block body %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".js-example-basic-single").select2();
+        });
+    </script>
     <div style="border:1px dotted #eee; padding:15px;">
         <form method="post" Action="{{ path('SongStyle') }}">
-            <!--<input type="text" class="form-control" name="value"><br>-->
-            <select class="form-control" name="style">
+
+            <select class="js-example-basic-single form-control input-lg" name="style">
                 <option value="false">Sin opción</option>
-                <option value="rock"> Rock</option>
-                <option value="pop"> Pop</option>
-                <option value="hip hop"> Hip hop</option>
+                {% for key,row in genres.genres %}
+                    <option value="{{ row.name }}">{{ row.name }}</option>
+                {% endfor %}
+                <option value="reggaeton">reggaeton</option>
             </select>
-            <br>
+            <br><br>
             <input type="submit" class="btn btn-info" value="buscar">
         </form>
     </div>

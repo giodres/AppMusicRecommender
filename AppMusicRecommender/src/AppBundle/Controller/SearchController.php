@@ -38,9 +38,11 @@ class SearchController extends Controller
     {
         $this->_musicServiceLibrary = $this->container->get("music.imp.service.library");
         $songTrack = $this->_musicServiceLibrary->getSongsByArtist($value);
+        $genres = $this->_musicServiceLibrary->getAllGenres();
         return $this->render('searchMain/index.html.twig',
             array('base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-                "result" => $songTrack
+                "result" => $songTrack,
+                "genres" => $genres
             )
         );
     }
@@ -54,9 +56,11 @@ class SearchController extends Controller
         $style = $request->request->get('style');
         $this->_musicServiceLibrary = $this->container->get("music.imp.service.library");
         $songTrack = $this->_musicServiceLibrary->getSongsByNameStyle($style);
+        $genres = $this->_musicServiceLibrary->getAllGenres();
         return $this->render('searchMain/index.html.twig',
             array('base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-                "result" => $songTrack
+                "result" => $songTrack,
+                "genres" => $genres
             )
         );
     }

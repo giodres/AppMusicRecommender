@@ -41,10 +41,6 @@ class RecommenderServiceLibrary
 
     public function publishActivity($user, $song)
     {
-        $result = $this->_recommenderBuilderRepository->getActivity($user, $song->getId());
-
-        if ($result == null) $this->_recommenderBuilderRepository->publishActivity($user, $song);
-
-        else $this->_recommenderBuilderRepository->updateActivity($result->getId());
+        $this->_recommenderBuilderRepository->publishActivity($user, $song);
     }
 }

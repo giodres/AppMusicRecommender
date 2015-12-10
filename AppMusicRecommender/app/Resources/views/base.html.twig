@@ -4,6 +4,8 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
@@ -30,8 +32,12 @@
                         idTrack: id_track
                     },
                     success: function (response) {
-                        $("#imgSong").prop("src", response.image);
-                        $("#object").html('<audio controls autoplay style="width: 100%"><source src="' + response.preview + '" type="audio/ogg" /><source src="' + response.preview + '" type="audio/mpeg" /></audio>');
+                        if (response.preview == null) {
+                            $("#imgSong").prop("src", 'http://sisplade.oaxaca.gob.mx/directorio/images/NoDisponibleText.png');
+                        } else {
+                            $("#imgSong").prop("src", response.image);
+                            $("#object").html('<audio controls autoplay style="width: 100%"><source src="' + response.preview + '" type="audio/ogg" /><source src="' + response.preview + '" type="audio/mpeg" /></audio>');
+                        }
                         $("#player").show();
                         $("#load").fadeOut();
                     },

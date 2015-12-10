@@ -40,7 +40,7 @@ class EchonestSongs extends Echonest {
         return $this->queryBuilder
             ->setCommand('search')
             ->setOption('artist', $name)
-            ->setOption('results', '30')
+            ->setOption('results', '100')
             ->setOption('bucket', 'tracks')
             ->setOption('sort', 'song_hotttnesss-desc');
     }
@@ -55,8 +55,7 @@ class EchonestSongs extends Echonest {
     {
         $query = $this->queryBuilder
             ->setCommand('search')
-            ->setOption('results', '50')
-            ->setOption('song_min_hotttnesss', '0.1')
+            ->setOption('results', '100')
             ->setOption('bucket', 'tracks')
             ->setOption('sort', 'song_hotttnesss-desc');
 
@@ -67,20 +66,19 @@ class EchonestSongs extends Echonest {
         return $query;
     }
 
-    public function searchSongStyle($title = false, $style = false)
+    public function searchSongStyle($style = false, $title = false)
     {
         $query = $this->queryBuilder
             ->setCommand('search')
-            ->setOption('results', '50')
+            ->setOption('results', '100')
             ->setOption('bucket', 'tracks')
-            ->setOption('sort', 'song_hotttnesss-asc');;
+            ->setOption('sort', 'song_hotttnesss-desc');
         if ($style) {
             $query->setOption('style', $style);
         }
         if ($title) {
             $query->setOption('title', $title);
         }
-
         return $query;
     }
 
@@ -95,7 +93,6 @@ class EchonestSongs extends Echonest {
         return $this->queryBuilder
             ->setCommand('profile')
             ->setOption('id', $id);
-
 
     }
 }

@@ -24,13 +24,14 @@ class Song
     private $track;
     private $idArtist;
     private $genere;
+    private $nameGenere;
 
     function __construct($params)
     {
         $this->id = $params['id'];
         $this->nameArtist = $params['artist_name'];
         $this->nameSong = $params['title'];
-        $this->idArtist = $params['artist_name'];
+        $this->idArtist = $params['artist_id'];
         $this->duration = gmdate("i:s", $params['audio_summary']['duration']);
     }
 
@@ -64,6 +65,11 @@ class Song
         return $this->genere;
     }
 
+    public function getNameGenere()
+    {
+        return $this->nameGenere;
+    }
+
     public function getDuration()
     {
         return $this->duration;
@@ -73,11 +79,10 @@ class Song
     {
         try {
             $json = file_get_contents('http://developer.echonest.com/api/v4/artist/profile?api_key=MDORNCSRVVWZJVJFN&id=' . $this->idArtist . '&bucket=genre&format=json');
-
             $obj = json_decode($json);
-            $this->genere = $obj->response->artist->genres[0];
+            $this->nameGenere = $obj->response->artist->genres[0]->name;
         } catch (ContextErrorException $e) {
-            $this->genere = 0;
+            $this->nameGenere = 0;
         }
     }
 

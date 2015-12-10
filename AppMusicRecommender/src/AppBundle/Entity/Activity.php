@@ -53,11 +53,6 @@ class Activity
     private $idAlbum;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $clicks;
-
-    /**
      * @Assert\DateTime()
      */
     private $dateCreated;
@@ -66,7 +61,6 @@ class Activity
     public function __construct($user, $idSong, $idSinger, $idAlbum, $idGenere)
     {
         $this->dateCreated = date("Y-m-d H:i:s");
-        $this->clicks = 0;
         $this->user = $user;
         $this->idSong = $idSong;
         $this->idSinger = $idSinger;
@@ -144,19 +138,6 @@ class Activity
         return $this->dateCreated = $dateCreated;
     }
 
-    public function getClicks()
-    {
-        return $this->clicks;
-    }
 
-    public function setClicks($clicks)
-    {
-        return $this->clicks = $clicks;
-    }
-
-    public function sumClicks()
-    {
-        return $this->clicks++;
-    }
 
 }

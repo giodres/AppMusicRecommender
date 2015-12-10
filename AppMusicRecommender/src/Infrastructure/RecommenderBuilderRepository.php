@@ -26,18 +26,10 @@ class RecommenderBuilderRepository
         $this->doctrine = $doctrine;
     }
 
-    public function getActivity($user, $idSong)
-    {//var_dump($user->getUser()->getId());
-        $query = $this->doctrine->getRepository("AppBundle:Activity")
-            ->findBy(array('idSong' => $idSong, 'user' => $user->getId()));
-        if ($query != null) return $query;
-        return null;
-    }
-
     public function publishActivity($user, $song)
     {
         try {
-            $act = new Activity($user, $song->getId(), $song->getIdArtist(), $song->getTrack()->getIdAlbum(), $song->getIdGenere());
+            $act = new Activity($user, $song->getNameSong(), $song->getNameArtist(), $song->getTrack()->getNameAlbum(), $song->getNameGenere());
             $this->doctrine->persist($act);
             $this->doctrine->flush();
             return true;
@@ -46,18 +38,4 @@ class RecommenderBuilderRepository
         }
 
     }
-
-    public function updateActivity($user, $idActivity)
-    {
-        try {
-            $activity = $this->doctrine->getRepository("AppBundle:Activity")
-                ->findBy(array('idActivity' => $idActivity, 'user' => $user->getId()));
-            $activity->summClick();
-            $this->doctrine->flush();
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
 }

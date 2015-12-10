@@ -5,6 +5,7 @@ namespace Library;
 
 
 use Echonest\Facade\Echonest;
+use Echonest\Facade\EchonestGenres;
 use Echonest\Facade\EchonestSongs;
 use Echonest\Facade\EchonestTracks;
 use Symfony\Component\DependencyInjection\Container;
@@ -18,6 +19,7 @@ Class MusicRepository implements IMusicRepository
     Private $keyApi;
     private $SongsLibrary;
     private $TrackLibrary;
+    private $GenresLibrary;
 
     public function __construct() {
         $this->params = new Container();
@@ -25,6 +27,7 @@ Class MusicRepository implements IMusicRepository
         $this->apiMusic = Echonest::init($this->keyApi);
         $this->SongsLibrary = new EchonestSongs($this->apiMusic);
         $this->TrackLibrary = new EchonestTracks($this->apiMusic);
+        $this->GenresLibrary = new EchonestGenres($this->apiMusic);
     }
 
     public function searchSongs($value) {
@@ -82,6 +85,11 @@ Class MusicRepository implements IMusicRepository
         }
         return $songTrack;
 
+    }
+
+    public function getAllGenres()
+    {
+        return $this->GenresLibrary->getList()->get();
     }
 
     public function searchTrackWithArtist() {

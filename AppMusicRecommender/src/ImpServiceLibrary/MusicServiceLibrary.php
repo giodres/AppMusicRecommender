@@ -40,6 +40,11 @@ class MusicServiceLibrary
         return $this->_musicLibraryRepository->getSongsByNameStyle($value);
     }
 
+    public function getAllGenres()
+    {
+        return $this->_musicLibraryRepository->getAllGenres();
+    }
+
 
 
 
