@@ -8,14 +8,17 @@
             $(".js-example-basic-single").select2();
         });
     </script>
-    <div style="border:1px dotted #eee; padding:15px;">
+    <div class="col-xs-12 col-md-12" style="border:1px dotted #eee; padding:15px;">
+        <h4>Filtrar por genero</h4>
         <form method="post" Action="{{ path('SongStyle') }}">
-
-            <select class="js-example-basic-single form-control input-lg" name="style">
+            <select class="js-example-basic-single form-control" name="style">
                 <option value="false">Sin opción</option>
                 {% for key,row in genres.genres %}
                     <option value="{{ row.name }}">{{ row.name }}</option>
                 {% endfor %}
+                <option value="rock">rock</option>
+                <option value="hip hop">hip hop</option>
+                <option value="r&b">R&B</option>
                 <option value="reggaeton">reggaeton</option>
             </select>
             <br><br>

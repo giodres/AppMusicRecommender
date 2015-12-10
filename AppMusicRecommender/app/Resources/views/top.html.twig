@@ -18,12 +18,21 @@
 
                     {% endif %}
                 </ul>
-                <form class="navbar-form navbar-right" method="GET" Action="{{ path('listOfSongs') }}" id="formSearchTop">
+            </div>
+        </div>
+    </nav>
+    <div class="col-md-offset-3 col-xs-12 col-md-7">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Buscar Por Artista</h3>
+
+                <form method="GET" Action="{{ path('listOfSongs') }}" id="formSearchTop">
                     <input type="text" class="form-control" placeholder="Search..." id="searchValueTop">
                 </form>
             </div>
         </div>
-    </nav>
+    </div>
+    <div class="col-xs-12 col-md-12">&nbsp;</div>
 
     <script>
         (function (window, $) {

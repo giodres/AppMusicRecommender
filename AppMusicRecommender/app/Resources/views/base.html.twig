@@ -75,14 +75,14 @@
     </head>
     <body>
         {% block top %}{% endblock %}
-        <div class="panel panel-default">
+        <div>
             <div class="panel-body" id="load"
                  style="display:none;position: absolute; width: 100%;height: 500%; z-index:111111;text-align: center;background-color: #FFFFFF;">
                 <img src="http://linux.m2osw.com/sites/linux.m2osw.com/files/images/waiting-wheel-300x300.gif">
             </div>
         </div>
 
-        <div class="col-xs-12 col-md-3">Recomendador</div>
+        <div class="col-xs-12 col-md-3">&nbsp;</div>
         <div class="col-xs-12 col-md-7">{% block body %}{% endblock %}</div>
         <div class="col-xs-12 col-md-7">{% block bodyHome %}{% endblock %}</div>
         {% block javascript %}
