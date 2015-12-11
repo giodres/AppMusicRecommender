@@ -1,5 +1,64 @@
 {% extends 'top.html.twig' %}
 {% block input %}
+    <script>
+
+        function loadSong(id_song, id_track) {
+            $("#load").show();
+            $('html, body').animate({
+                scrollTop: 0,
+            }, 1000);
+
+            $.ajax({
+                url: "{{ path('publishActivity') }}",
+                type: "GET",
+                data: {
+                    idSong: id_song,
+                    idTrack: id_track
+                },
+                success: function (response) {
+                    if (response.preview == null) {
+                        $("#imgSong").prop("src", 'http://sisplade.oaxaca.gob.mx/directorio/images/NoDisponibleText.png');
+                    } else {
+                        $("#imgSong").prop("src", response.image);
+                        $("#object").html('<audio controls autoplay style="width: 100%"><source src="' + response.preview + '" type="audio/ogg" /><source src="' + response.preview + '" type="audio/mpeg" /></audio>');
+                    }
+                    $("#player").show();
+                    $("#load").fadeOut();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                    $("#load").fadeOut();
+                }
+
+            });
+        }
+
+        $(document).ready(function () {
+            $('#formSearchTop').submit(function (event) {
+                event.preventDefault();
+                var input = $("#searchValueTop").val();
+                var url = $("#urlOptionSearch").val();
+                window.location.href = url + '?title=' + input;
+            });
+
+
+            $.ajax({
+                url: "{{ path('getRecomenderBySinger') }}",
+                type: "GET",
+                success: function (response) {
+                    if (response != null)
+                        $("#recommender").html(response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+
+                }
+
+            });
+        });
+
+
+    </script>
 
     <div class="col-xs-12 col-md-12">
         <div class="panel panel-default">
@@ -18,15 +77,6 @@
             </div>
         </div>
     </div>
-    <script>
-        (function (window, $) {
-            $('#formSearchTop').submit(function (event) {
-                event.preventDefault();
-                var input = $("#searchValueTop").val();
-                var url = $("#urlOptionSearch").val();
-                window.location.href = url + '?title=' + input;
-            });
-        })(window, jQuery);
-    </script>
+
     <div class="col-xs-12 col-md-12">&nbsp;</div>
 {% endblock %}

@@ -16,57 +16,6 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script>
-
-            function loadSong(id_song, id_track) {
-                $("#load").show();
-                $('html, body').animate({
-                    scrollTop: 0,
-                }, 1000);
-
-                $.ajax({
-                    url: "{{ path('publishActivity') }}",
-                    type: "GET",
-                    data: {
-                        idSong: id_song,
-                        idTrack: id_track
-                    },
-                    success: function (response) {
-                        if (response.preview == null) {
-                            $("#imgSong").prop("src", 'http://sisplade.oaxaca.gob.mx/directorio/images/NoDisponibleText.png');
-                        } else {
-                            $("#imgSong").prop("src", response.image);
-                            $("#object").html('<audio controls autoplay style="width: 100%"><source src="' + response.preview + '" type="audio/ogg" /><source src="' + response.preview + '" type="audio/mpeg" /></audio>');
-                        }
-                        $("#player").show();
-                        $("#load").fadeOut();
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus, errorThrown);
-                        $("#load").fadeOut();
-                    }
-
-                });
-            }
-
-            $(document).ready(function () {
-                $.ajax({
-                    url: "{{ path('getRecomenderBySinger') }}",
-                    type: "GET",
-                    success: function (response) {
-                        if (response != null)
-                            $("#recommender").html(response);
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(textStatus, errorThrown);
-
-                    }
-
-                });
-            });
-
-
-        </script>
 
     </head>
     <body>
