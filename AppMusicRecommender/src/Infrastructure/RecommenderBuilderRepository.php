@@ -11,6 +11,7 @@ namespace Infrastructure;
 use AppBundle\Entity\Activity;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Doctrine\ORM\EntityManager;
+use  Infrastructure\QueryBuilder\RecommenderQueryBuilder;
 
 class RecommenderBuilderRepository
 {
@@ -36,6 +37,17 @@ class RecommenderBuilderRepository
         } catch (Exception $e) {
             return false;
         }
+    }
 
+    public function getRecomenderBySinger($user)
+    {
+        $em = $this->doctrine;
+        $connection = $em->getConnection();
+        $statement = $connection->prepare(RecommenderQueryBuilder::$getArtistGroupQueryBuilder);
+        $statement->bindValue('user_id', $user->getId());
+        $statement->execute();
+        $results = $statement->fetchAll();
+
+        return $results;
     }
 }

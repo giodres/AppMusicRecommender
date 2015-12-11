@@ -30,38 +30,10 @@ Class MusicRepository implements IMusicRepository
         $this->GenresLibrary = new EchonestGenres($this->apiMusic);
     }
 
-    public function searchSongs($value) {
-
-        $listSongs = $this->SongsLibrary->getArtistSongs($value)->get(null,true);
-        return  $listSongs;
-    }
-
-    public function searchSongStyle($value)
-    {
-
-        $listSongs = $this->SongsLibrary->searchSongStyle($value)->get(null, true);
-
-        return $listSongs;
-    }
-
-    public function searchTrack($id) {
-
-        $track = $this->TrackLibrary->getTrackProfile($id)->get();
-        return  $track;
-    }
-
-    public function getSongById($id)
-    {
-
-        $song = $this->SongsLibrary->getSongProfile($id)->get(null, true);
-        return new Song($song['songs'][0]);
-    }
-
-
-    public function getSongsByArtist($value)
+    public function getSongsByArtist($value, $results = 100)
     {
         $songTrack = array();
-        $songs = $this->searchSongs($value);
+        $songs = $this->searchSongs($value, $results);
         foreach ($songs['songs'] as $rot) {
             if (count($rot['tracks']) == 0) continue;
             $track = Track::constructTrack($rot['tracks'][0]);
@@ -87,10 +59,61 @@ Class MusicRepository implements IMusicRepository
 
     }
 
+    public function getSongsByTitle($value, $results = 100)
+    {
+        $songTrack = array();
+        $songs = $this->searchSongsByTitle($value, $results);
+        foreach ($songs['songs'] as $rot) {
+            if (count($rot['tracks']) == 0) continue;
+            $track = Track::constructTrack($rot['tracks'][0]);
+            $rotSong = new Song($rot);
+            $rotSong->setTrack($track);
+            $songTrack[] = $rotSong;
+        }
+        return $songTrack;
+    }
+
     public function getAllGenres()
     {
         return $this->GenresLibrary->getList()->get();
     }
+
+    public function searchSongs($value, $results = 100)
+    {
+
+        $listSongs = $this->SongsLibrary->getArtistSongs($value, $results)->get(null, true);
+        return $listSongs;
+    }
+
+    public function searchSongsByTitle($value, $results = 100)
+    {
+
+        $listSongs = $this->SongsLibrary->searchSongs($value, $results)->get(null, true);
+        return $listSongs;
+    }
+
+    public function searchSongStyle($value)
+    {
+
+        $listSongs = $this->SongsLibrary->searchSongStyle($value)->get(null, true);
+
+        return $listSongs;
+    }
+
+    public function searchTrack($id)
+    {
+
+        $track = $this->TrackLibrary->getTrackProfile($id)->get();
+        return $track;
+    }
+
+    public function getSongById($id)
+    {
+
+        $song = $this->SongsLibrary->getSongProfile($id)->get(null, true);
+        return new Song($song['songs'][0]);
+    }
+
 
     public function searchTrackWithArtist() {
         //http://developer.echonest.com/api/v4/song/search?api_key=MDORNCSRVVWZJVJFN&format=json&results=4&artist=cosculluela&bucket=id:7digital-US&bucket=audio_summary&bucket=tracks

@@ -62,7 +62,7 @@ services:
           arguments: [@music.imp.service.library]
 
   recommender.controller:
-            class:     AppBundle\Controller\SearchController
+            class:     AppBundle\Controller\RecommenderController
             arguments: [@music.imp.service.library,@recommender.imp.service.library ]
 
 

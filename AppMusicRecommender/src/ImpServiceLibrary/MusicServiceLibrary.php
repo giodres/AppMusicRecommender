@@ -25,9 +25,14 @@ class MusicServiceLibrary
         $this->_musicLibraryRepository = $musicLibraryRepository;
     }
 
-    public function getSongsByArtist($value)
+    public function getSongsByArtist($value, $results = 100)
     {
-        return $this->_musicLibraryRepository->getSongsByArtist($value);
+        return $this->_musicLibraryRepository->getSongsByArtist($value, $results);
+    }
+
+    public function getSongsByTitle($value, $results = 100)
+    {
+        return $this->_musicLibraryRepository->getSongsByTitle($value, $results);
     }
 
     public function getSongsById($value)

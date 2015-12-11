@@ -35,12 +35,12 @@ class EchonestSongs extends Echonest {
      * @param string $name
      * @return $this
      */
-    public function getArtistSongs($name)
+    public function getArtistSongs($name, $results = 100)
     {
         return $this->queryBuilder
             ->setCommand('search')
             ->setOption('artist', $name)
-            ->setOption('results', '100')
+            ->setOption('results', $results)
             ->setOption('bucket', 'tracks')
             ->setOption('sort', 'song_hotttnesss-desc');
     }
@@ -51,11 +51,11 @@ class EchonestSongs extends Echonest {
      * @param bool $title
      * @return $this
      */
-    public function searchSongs($title = false)
+    public function searchSongs($title = false, $results = 100)
     {
         $query = $this->queryBuilder
             ->setCommand('search')
-            ->setOption('results', '100')
+            ->setOption('results', $results)
             ->setOption('bucket', 'tracks')
             ->setOption('sort', 'song_hotttnesss-desc');
 
@@ -66,11 +66,11 @@ class EchonestSongs extends Echonest {
         return $query;
     }
 
-    public function searchSongStyle($style = false, $title = false)
+    public function searchSongStyle($style = false, $title = false, $results = 100)
     {
         $query = $this->queryBuilder
             ->setCommand('search')
-            ->setOption('results', '100')
+            ->setOption('results', $results)
             ->setOption('bucket', 'tracks')
             ->setOption('sort', 'song_hotttnesss-desc');
         if ($style) {

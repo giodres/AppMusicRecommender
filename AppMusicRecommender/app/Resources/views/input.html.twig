@@ -1,0 +1,32 @@
+{% extends 'top.html.twig' %}
+{% block input %}
+
+    <div class="col-xs-12 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Buscar Por Artista</h3>
+
+                <form method="GET" Action="{{ path('listOfSongs') }}" id="formSearchTop">
+                    <select id="urlOptionSearch" class="form-control">
+                        <option value="{{ path('getListBySong') }}">Cancion</option>
+                        <option value="{{ path('getListBySinger') }}">Artista</option>
+                    </select>
+                    <br>
+                    <input type="text" class="form-control" placeholder="Search..." id="searchValueTop">
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function (window, $) {
+            $('#formSearchTop').submit(function (event) {
+                event.preventDefault();
+                var input = $("#searchValueTop").val();
+                var url = $("#urlOptionSearch").val();
+                window.location.href = url + '?title=' + input;
+            });
+        })(window, jQuery);
+    </script>
+    <div class="col-xs-12 col-md-12">&nbsp;</div>
+{% endblock %}

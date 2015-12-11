@@ -39,6 +39,11 @@ class RecommenderServiceLibrary
         return 1;
     }
 
+    public function getRecomenderBySinger($user)
+    {
+        return $this->_recommenderBuilderRepository->getRecomenderBySinger($user);
+    }
+
     public function publishActivity($user, $song)
     {
         $this->_recommenderBuilderRepository->publishActivity($user, $song);

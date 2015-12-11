@@ -29,3 +29,6 @@ security:
                 target: /
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/Search, roles: ROLE_USER}
+        - { path: ^/Recommender, roles: ROLE_USER}

@@ -36,11 +36,21 @@ class RecommenderController extends Controller
      */
     public function getRecomenderBySinger()
     {
+        $user = $this->get('security.context')->getToken()->getUser();
         $this->_recommenderServiceLibrary = $this->container->get("recommender.imp.service.library");
-        $this->_recommenderServiceLibrary->example();
-        return $this->render('searchMain/index.html.twig',
+        $this->_musicServiceLibrary = $this->container->get("music.imp.service.library");
+
+        $activity = $this->_recommenderServiceLibrary->getRecomenderBySinger($user);
+        $_activities = array();
+
+        foreach ($activity as $rot) {
+            $_activities = $this->getSongByArtistOutArray($rot, $_activities);
+        }
+        $_activities = $this->array_sort($_activities, 'nameSong', SORT_ASC);
+
+        return $this->render('recommender/artist.html.twig',
             array('base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-                "result" => null
+                "result" => $_activities
             )
         );
     }
@@ -103,5 +113,50 @@ class RecommenderController extends Controller
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+
+
+    private function getSongByArtistOutArray($activity, $_array)
+    {
+        $activities = $this->_musicServiceLibrary->getSongsByArtist($activity['id_singer'], 20);
+        foreach ($activities as $rot) {
+            $_array[] = $rot;
+        }
+        return $_array;
+    }
+
+    private function array_sort($array, $on, $order = SORT_ASC)
+    {
+        $new_array = array();
+        $sortable_array = array();
+
+        if (count($array) > 0) {
+            foreach ($array as $k => $v) {
+                if (is_array($v)) {
+                    foreach ($v as $k2 => $v2) {
+                        if ($k2 == $on) {
+                            $sortable_array[$k] = $v2;
+                        }
+                    }
+                } else {
+                    $sortable_array[$k] = $v;
+                }
+            }
+
+            switch ($order) {
+                case SORT_ASC:
+                    asort($sortable_array);
+                    break;
+                case SORT_DESC:
+                    arsort($sortable_array);
+                    break;
+            }
+
+            foreach ($sortable_array as $k => $v) {
+                $new_array[$k] = $array[$k];
+            }
+        }
+
+        return $new_array;
     }
 }
