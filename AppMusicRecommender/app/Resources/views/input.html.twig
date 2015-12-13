@@ -46,6 +46,7 @@
                 url: "{{ path('getRecomenderBySinger') }}",
                 type: "GET",
                 success: function (response) {
+                    $("#recommender").html("");
                     if (response != null)
                         $("#recommender").html(response);
                 },
@@ -60,6 +61,7 @@
                 url: "{{ path('getRecomenderByTopHot') }}",
                 type: "GET",
                 success: function (response) {
+                    $("#hotTop").html("");
                     if (response != null)
                         $("#hotTop").html(response);
                 },
@@ -74,6 +76,7 @@
                 url: "{{ path('getRecomenderBySimilarSinger') }}",
                 type: "GET",
                 success: function (response) {
+                    $("#similarArtist").html("");
                     if (response != null)
                         $("#similarArtist").html(response);
                 },

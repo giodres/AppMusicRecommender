@@ -27,7 +27,6 @@
                 {% if is_granted("ROLE_USER") %}
                     <li><a href="#" style="color:white">Bienvenido {{ app.user.username }}</a></li>
                     <li><a href="{{ path('listOfSongs') }}">Buscador</a></li>
-                    <li><a href="{{ path('user_registration') }}">Recomendaciones</a></li>
                     <li><a href="{{ path('logout') }}">Cerrar Sesión</a></li>
                 {% endif %}
             </ul>
