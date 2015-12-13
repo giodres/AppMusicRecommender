@@ -5,6 +5,7 @@ namespace Library;
 
 
 use Echonest\Facade\Echonest;
+use Echonest\Facade\EchonestArtists;
 use Echonest\Facade\EchonestGenres;
 use Echonest\Facade\EchonestSongs;
 use Echonest\Facade\EchonestTracks;
@@ -20,6 +21,7 @@ Class MusicRepository implements IMusicRepository
     private $SongsLibrary;
     private $TrackLibrary;
     private $GenresLibrary;
+    private $ArtistLibrary;
 
     public function __construct() {
         $this->params = new Container();
@@ -28,6 +30,7 @@ Class MusicRepository implements IMusicRepository
         $this->SongsLibrary = new EchonestSongs($this->apiMusic);
         $this->TrackLibrary = new EchonestTracks($this->apiMusic);
         $this->GenresLibrary = new EchonestGenres($this->apiMusic);
+        $this->ArtistLibrary = new EchonestArtists($this->apiMusic);
     }
 
     public function getSongsByArtist($value, $results = 100)
@@ -43,6 +46,7 @@ Class MusicRepository implements IMusicRepository
         }
         return $songTrack;
     }
+
 
     public function getSongsByNameStyle($value)
     {
@@ -85,7 +89,14 @@ Class MusicRepository implements IMusicRepository
         return $listSongs;
     }
 
-    public function searchSongsByTitle($value, $results = 100)
+    public function searchSongSimilarArtist($value, $results = 2)
+    {
+
+        $listSongs = $this->ArtistLibrary->getSimilar($value, $results)->get(null, false);
+        return $listSongs;
+    }
+
+    public function searchSongsByTitle($value = false, $results = 100)
     {
 
         $listSongs = $this->SongsLibrary->searchSongs($value, $results)->get(null, true);

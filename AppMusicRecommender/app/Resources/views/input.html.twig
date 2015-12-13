@@ -55,6 +55,34 @@
                 }
 
             });
+
+            $.ajax({
+                url: "{{ path('getRecomenderByTopHot') }}",
+                type: "GET",
+                success: function (response) {
+                    if (response != null)
+                        $("#hotTop").html(response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+
+                }
+
+            });
+
+            $.ajax({
+                url: "{{ path('getRecomenderBySimilarSinger') }}",
+                type: "GET",
+                success: function (response) {
+                    if (response != null)
+                        $("#similarArtist").html(response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+
+                }
+
+            });
         });
 
 

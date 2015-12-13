@@ -48,7 +48,59 @@ class RecommenderController extends Controller
         }
         $_activities = $this->array_sort($_activities, 'nameSong', SORT_ASC);
 
-        return $this->render('recommender/artist.html.twig',
+        $render = 'default/empty.html.twig';
+        if (count($_activities) > 0) $render = 'recommender/artist.html.twig';
+
+        return $this->render($render,
+            array('base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+                "result" => $_activities
+            )
+        );
+    }
+
+
+    /**
+     * @Route("/Song", name="getRecomenderByTopHot")
+     * @Method({"GET"})
+     */
+    public function getRecomenderByTopHot()
+    {
+        $this->_musicServiceLibrary = $this->container->get("music.imp.service.library");
+
+        $activity = $this->_musicServiceLibrary->getSongsByTitle();
+
+        $render = 'default/empty.html.twig';
+        if (count($activity) > 0) $render = 'recommender/hot.html.twig';
+
+        return $this->render($render,
+            array('base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+                "result" => $activity
+            )
+        );
+    }
+
+    /**
+     * @Route("/Similar/Singer", name="getRecomenderBySimilarSinger")
+     * @Method({"GET"})
+     */
+    public function getRecomenderBySimilarSinger()
+    {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $this->_recommenderServiceLibrary = $this->container->get("recommender.imp.service.library");
+        $this->_musicServiceLibrary = $this->container->get("music.imp.service.library");
+
+        $activity = $this->_recommenderServiceLibrary->getRecomenderBySinger($user);
+        $_activities = array();
+
+        foreach ($activity as $rot) {
+            $_activities = $this->getSongBySimilarArtistOutArray($rot, $_activities);
+        }
+        $_activities = $this->array_sort($_activities, 'nameSong', SORT_ASC);
+
+        $render = 'default/empty.html.twig';
+        if (count($_activities) > 0) $render = 'recommender/similar_artist.html.twig';
+
+        return $this->render($render,
             array('base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
                 "result" => $_activities
             )
@@ -119,6 +171,15 @@ class RecommenderController extends Controller
     private function getSongByArtistOutArray($activity, $_array)
     {
         $activities = $this->_musicServiceLibrary->getSongsByArtist($activity['id_singer'], 20);
+        foreach ($activities as $rot) {
+            $_array[] = $rot;
+        }
+        return $_array;
+    }
+
+    private function getSongBySimilarArtistOutArray($activity, $_array)
+    {
+        $activities = $this->_musicServiceLibrary->getSongBySimilarArtist($activity['id_singer'], 2);
         foreach ($activities as $rot) {
             $_array[] = $rot;
         }

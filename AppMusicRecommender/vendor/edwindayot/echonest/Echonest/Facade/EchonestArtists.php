@@ -308,10 +308,11 @@ class EchonestArtists extends Echonest {
      * @param string $name
      * @return $this
      */
-    public function getSimilar($name)
+    public function getSimilar($name, $results = 3)
     {
         return $this->queryBuilder
             ->setCommand('similar')
+            ->setOption('results', $results)
             ->setName($name);
     }
 

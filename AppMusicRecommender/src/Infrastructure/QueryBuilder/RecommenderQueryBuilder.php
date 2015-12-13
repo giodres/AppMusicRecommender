@@ -18,7 +18,5 @@ class RecommenderQueryBuilder
         GROUP BY id_singer
         ORDER BY COUNT( * ) DESC
         LIMIT 3;
-
     ";
-
 }

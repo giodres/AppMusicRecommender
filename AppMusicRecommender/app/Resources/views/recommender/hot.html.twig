@@ -1,0 +1,24 @@
+<h2>Top Actuales</h2>
+<div style="height: 400px; overflow-y: scroll;">
+    <table style="width: 100%;">
+        {% for key,row in result %}
+            <tbody class="panel panel-default">
+            <tr class="panel-body">
+                <td style="vertical-align: inherit;">
+                    <div style="text-align: left">{{ row.nameSong }}</div>
+                    <div style="text-align: left">{{ row.nameArtist }}</div>
+                </td>
+                <td>{{ row.duration }}</td>
+                <td style="vertical-align: inherit;text-align: center">
+                    <button type="button" class="btn btn-default" aria-label="Left Align"
+                            onclick="loadSong('{{ row.id }}','{{ row.getTrack().getForeignId() }}');">
+                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+</div>
+
+

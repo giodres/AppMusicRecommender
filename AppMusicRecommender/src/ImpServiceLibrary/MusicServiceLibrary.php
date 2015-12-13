@@ -30,10 +30,22 @@ class MusicServiceLibrary
         return $this->_musicLibraryRepository->getSongsByArtist($value, $results);
     }
 
-    public function getSongsByTitle($value, $results = 100)
+    public function getSongsByTitle($value = false, $results = 100)
     {
         return $this->_musicLibraryRepository->getSongsByTitle($value, $results);
     }
+
+    public function getSongBySimilarArtist($value = false, $results = 2)
+    {
+        $_songs = array();
+        $artist = $this->_musicLibraryRepository->searchSongSimilarArtist($value, $results);
+
+        foreach ($artist['artists'] as $row) {
+            $_songs = array_merge($_songs, $this->getSongsByArtist($row['name'], 5));
+        }
+        return $_songs;
+    }
+
 
     public function getSongsById($value)
     {
