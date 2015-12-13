@@ -1,5 +1,6 @@
-<h2>Recomendaciones</h2>
-<div style="height: 400px; overflow-y: scroll;">
+<h3 class="well well-sm">Recomendaciones <span id="recommenderOption" class="badge"
+                                               style="float: right;cursor: pointer; ">Mostrar/Ocultar</span></h3>
+<div style="height: 400px; overflow-y: scroll;display: none;" id="recommenderBody">
     <table style="width: 100%;">
         {% for key,row in result %}
             <tbody class="panel panel-default">
@@ -21,4 +22,12 @@
     </table>
 </div>
 
+
+<script>
+
+    $("#recommenderOption").click(function () {
+        $("#recommenderBody").toggle();
+    });
+
+</script>
 

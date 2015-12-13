@@ -1,5 +1,6 @@
-<h2>Artistas relacionados</h2>
-<div style="height: 400px; overflow-y: scroll;">
+<h3 class="well well-sm">Artistas relacionados <span id="recommenderSimilar" class="badge"
+                                                     style="float: right;cursor: pointer; ">Mostrar/Ocultar</span></h3>
+<div style="height: 400px; overflow-y: scroll;display: none;" id="recommenderSimilarBody">
     <table style="width: 100%;">
         {% for key,row in result %}
             <tbody class="panel panel-default">
@@ -22,3 +23,10 @@
 </div>
 
 
+<script>
+
+    $("#recommenderSimilar").click(function () {
+        $("#recommenderSimilarBody").toggle();
+    });
+
+</script>

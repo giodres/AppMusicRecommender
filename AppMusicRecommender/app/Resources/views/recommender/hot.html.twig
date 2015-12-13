@@ -1,5 +1,6 @@
-<h2>Top Actuales</h2>
-<div style="height: 400px; overflow-y: scroll;">
+<h3 class="well well-sm">Top actuales <span id="recommenderTop" class="badge" style="float: right;cursor: pointer; ">Mostrar/Ocultar</span>
+</h3>
+<div style="height: 400px; overflow-y: scroll;" id="recommenderTopBody">
     <table style="width: 100%;">
         {% for key,row in result %}
             <tbody class="panel panel-default">
@@ -22,3 +23,10 @@
 </div>
 
 
+<script>
+
+    $("#recommenderTop").click(function () {
+        $("#recommenderTopBody").toggle();
+    });
+
+</script>

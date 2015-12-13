@@ -15,6 +15,7 @@
                     idSong: id_song,
                     idTrack: id_track
                 },
+
                 success: function (response) {
                     if (response.preview == null) {
                         $("#imgSong").prop("src", 'http://sisplade.oaxaca.gob.mx/directorio/images/NoDisponibleText.png');
@@ -45,6 +46,9 @@
             $.ajax({
                 url: "{{ path('getRecomenderBySinger') }}",
                 type: "GET",
+                beforeSend: function () {
+                    $("#recommender").html('<img src="http://www.mysiponline.com/img/loading_windows.gif" style="width: 40%;">');
+                },
                 success: function (response) {
                     $("#recommender").html("");
                     if (response != null)
@@ -60,6 +64,9 @@
             $.ajax({
                 url: "{{ path('getRecomenderByTopHot') }}",
                 type: "GET",
+                beforeSend: function () {
+                    $("#hotTop").html('<img src="http://www.mysiponline.com/img/loading_windows.gif" style="width: 40%;">');
+                },
                 success: function (response) {
                     $("#hotTop").html("");
                     if (response != null)
@@ -75,6 +82,9 @@
             $.ajax({
                 url: "{{ path('getRecomenderBySimilarSinger') }}",
                 type: "GET",
+                beforeSend: function () {
+                    $("#similarArtist").html('<img src="http://www.mysiponline.com/img/loading_windows.gif" style="width: 40%;">');
+                },
                 success: function (response) {
                     $("#similarArtist").html("");
                     if (response != null)
