@@ -91,21 +91,18 @@ Class MusicRepository implements IMusicRepository
 
     public function searchSongSimilarArtist($value, $results = 2)
     {
-
         $listSongs = $this->ArtistLibrary->getSimilar($value, $results)->get(null, false);
         return $listSongs;
     }
 
     public function searchSongsByTitle($value = false, $results = 100)
     {
-
         $listSongs = $this->SongsLibrary->searchSongs($value, $results)->get(null, true);
         return $listSongs;
     }
 
     public function searchSongStyle($value)
     {
-
         $listSongs = $this->SongsLibrary->searchSongStyle($value)->get(null, true);
 
         return $listSongs;
@@ -113,22 +110,14 @@ Class MusicRepository implements IMusicRepository
 
     public function searchTrack($id)
     {
-
         $track = $this->TrackLibrary->getTrackProfile($id)->get();
         return $track;
     }
 
     public function getSongById($id)
     {
-
         $song = $this->SongsLibrary->getSongProfile($id)->get(null, true);
         return new Song($song['songs'][0]);
     }
-
-
-    public function searchTrackWithArtist() {
-        //http://developer.echonest.com/api/v4/song/search?api_key=MDORNCSRVVWZJVJFN&format=json&results=4&artist=cosculluela&bucket=id:7digital-US&bucket=audio_summary&bucket=tracks
-    }
-
 
 }

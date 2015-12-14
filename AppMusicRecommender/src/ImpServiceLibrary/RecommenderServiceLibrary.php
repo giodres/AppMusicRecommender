@@ -50,7 +50,6 @@ class RecommenderServiceLibrary
     }
 
 
-
     public function publishActivity($user, $song)
     {
         $this->_recommenderBuilderRepository->publishActivity($user, $song);

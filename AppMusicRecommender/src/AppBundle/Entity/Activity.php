@@ -53,14 +53,14 @@ class Activity
     private $idAlbum;
 
     /**
-     * @Assert\DateTime()
+     * @ORM\Column(type="datetime")
      */
     private $dateCreated;
 
 
     public function __construct($user, $idSong, $idSinger, $idAlbum, $idGenere)
     {
-        $this->dateCreated = date("Y-m-d H:i:s");
+        $this->dateCreated = new \DateTime('now');
         $this->user = $user;
         $this->idSong = $idSong;
         $this->idSinger = $idSinger;
