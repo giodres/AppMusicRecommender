@@ -14,6 +14,7 @@ class RecommenderQueryBuilder
     public static $getArtistGroupQueryBuilder = "
             (   SELECT user_id, id_singer
                 FROM Activity
+                WHERE user_id = :user_id
                 ORDER by date_created desc
                 LIMIT 1
             )
@@ -21,7 +22,7 @@ class RecommenderQueryBuilder
             (
                 SELECT user_id, id_singer
                 FROM Activity
-                WHERE user_id = 1
+                WHERE user_id = :user_id
                 GROUP BY id_singer
                 ORDER BY COUNT( * ) DESC
                 LIMIT 3
