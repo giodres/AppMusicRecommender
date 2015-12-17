@@ -34,11 +34,6 @@ class RecommenderServiceLibrary
         $this->_recommenderBuilderRepository = $recommenderRepository;
     }
 
-    public function example()
-    {
-        return 1;
-    }
-
     public function getRecomenderBySinger($user)
     {
         return $this->_recommenderBuilderRepository->getRecomenderBySinger($user);
