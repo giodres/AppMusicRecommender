@@ -26,6 +26,10 @@
 <script>
 
     $("#recommenderTop").click(function () {
+        if ($("#recommenderTopBody").hasClass("hidden-xs")) {
+            $("#recommenderTopBody").removeClass("hidden-xs");
+            return 0;
+        }
         $("#recommenderTopBody").toggle();
     });
 
