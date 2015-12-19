@@ -42,9 +42,14 @@ class RegistrationController extends Controller
             if($isCreate) return $this->redirectToRoute('login_route');
             return $this->render(
                 'sec/register.html.twig',
-                array('form' => $form->createView())
+                array('form' => $form->createView(), 'error' => null)
             );
-        } catch(Exception $e) {
+        } catch (\Exception $e) {
+            return $this->render(
+                'sec/register.html.twig',
+                array('form' => $form->createView(), 'error' => "Error: El usuario ya existe"
+                )
+            );
         }
     }
 
